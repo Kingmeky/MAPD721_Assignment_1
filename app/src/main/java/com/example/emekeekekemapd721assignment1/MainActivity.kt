@@ -42,6 +42,80 @@ fun MyApp() {
     var email by remember { mutableStateOf("") }
     var savedData by remember { mutableStateOf("") }
 
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        // Input fields
+        OutlinedTextField(
+            value = name,
+            onValueChange = { name = it },
+            label = { Text("Name") }
+        )
+        OutlinedTextField(
+            value = userid,
+            onValueChange = { userid = it },
+            label = { Text("UserID") }
+        )
+        OutlinedTextField(
+            value = email,
+            onValueChange = { email = it },
+            label = { Text("Email") }
+        )
+
+        // Buttons
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Button(onClick = { saveData(store, name, userid, email, context) }) {
+                Text("Save")
+            }
+            Button(onClick = { loadData(store) { data -> savedData = data } }) {
+                Text("Load")
+            }
+            Button(onClick = { clearData(store) }) {
+                Text("Clear")
+            }
+        }
+
+        // Display saved data
+        Text("Saved Data: $savedData")
+        Spacer(modifier = Modifier.height(300.dp))
+        Divider()
+        Text(text = "301354233", fontWeight = FontWeight.Bold)
+        Text(text = "Emeka Ekeke", fontWeight = FontWeight.Bold)
+    }
+
+}
+
+private fun saveData(store: UserStore, name: String, username: String, email: String, context: Context) {
+    MainScope().launch {
+        store.saveData(name, username, email)
+        // Show a notification message when data is saved
+        Toast.makeText(context, "Data saved", Toast.LENGTH_SHORT).show()
+    }
+}
+
+private fun loadData(store: UserStore, updateSavedData: (String) -> Unit) {
+    MainScope().launch {
+        store.getSavedData.collect { data ->
+            updateSavedData(data)
+        }
+    }
+}
+
+private fun clearData(store: UserStore) {
+    MainScope().launch {
+        store.clearData()
+    }
+
+}
+
+
 
 
 

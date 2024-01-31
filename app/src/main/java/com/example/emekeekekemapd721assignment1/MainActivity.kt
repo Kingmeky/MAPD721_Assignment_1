@@ -1,55 +1,47 @@
 package com.example.emekeekekemapd721assignment1
 
+import android.content.Context
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.Divider
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import com.example.emekeekekemapd721assignment1.data.UserStore
-import com.example.emekeekekemapd721assignment1.ui.theme.EmekeEkekeMAPD721Assignment1Theme
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            EmekeEkekeMAPD721Assignment1Theme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Store()
-                }
-            }
+            MyApp()
         }
     }
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
-@Preview(showBackground = true)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun Store(){
-
+fun MyApp() {
     val context = LocalContext.current
-    val keyboardController = LocalSoftwareKeyboardController.current
-    val userName = remember{ mutableStateOf(TextFieldValue())}
-    val name = remember { mutableStateOf(TextFieldValue()) }
-    val emailAdd = remember { mutableStateOf(TextFieldValue()) }
     val store = UserStore(context)
-    val userNameText = store.getAccessToken.collectAsState(initial = "")
-    val nameText = store.getStudentId.collectAsState(initial = "")
-    val emailAddText = store.getStudentId.collectAsState(initial = "")
+
+    // State for input fields
+    var name by remember { mutableStateOf("") }
+    var userid by remember { mutableStateOf("233") }
+    var email by remember { mutableStateOf("") }
+    var savedData by remember { mutableStateOf("") }
 
 
 
-}
+

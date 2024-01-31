@@ -92,28 +92,6 @@ fun MyApp() {
 
 }
 
-private fun saveData(store: UserStore, name: String, username: String, email: String, context: Context) {
-    MainScope().launch {
-        store.saveData(name, username, email)
-        // Show a notification message when data is saved
-        Toast.makeText(context, "Data saved", Toast.LENGTH_SHORT).show()
-    }
-}
-
-private fun loadData(store: UserStore, updateSavedData: (String) -> Unit) {
-    MainScope().launch {
-        store.getSavedData.collect { data ->
-            updateSavedData(data)
-        }
-    }
-}
-
-private fun clearData(store: UserStore) {
-    MainScope().launch {
-        store.clearData()
-    }
-
-}
 
 
 
